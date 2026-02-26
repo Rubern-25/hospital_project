@@ -16,10 +16,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-]
+
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 STORAGES = {
     "default": {
