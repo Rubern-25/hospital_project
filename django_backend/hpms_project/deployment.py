@@ -30,14 +30,12 @@ STORAGES = {
 },}
 
 CONNECTION = os.environ['AZURE_POSTGRESQL_CONNECTION_STRING']
-CONNECTION_STR = {pair.split('=')[0]:pair.split('=')[1] for pair in CONNECTION.split(';')}
+CONNECTION_STR = {pair.split('=')[0]:pair.split('=')[1] for pair in CONNECTION.split(' ')}
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": CONNECTION_STR["hospital_db"],          # your DB name
-        "USER": CONNECTION_STR["hospital_user"],        # your DB user
-        "PASSWORD": CONNECTION_STR["123"],  # your DB password
-        "HOST":CONNECTION_STR["localhost"],            # or IP/hostname
+    "default": {"NAME": CONNECTION_STR['dbname'],
+        "HOST": CONNECTION_STR['host'],
+        "USER": CONNECTION_STR['user'],
+        "PASSWORD": CONNECTION_STR['password'],           # or IP/hostname
                        # default PostgreSQL port
     }
 }
