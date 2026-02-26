@@ -90,4 +90,4 @@ jobs:
           app-name: 'django-backend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FA97F690C98A4EB09C2F7FCC90F5F74A }}
-          package: ./django_backend
+        
