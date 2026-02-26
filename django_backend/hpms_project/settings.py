@@ -5,7 +5,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-change-this-in-production-hpms-2026'
+SECRET_KEY = '(34!v2gr=0i@z@ld!46g3x$o40$!&vb@hz09xxdz!@g^06muw4'
 import os
 DEBUG = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
