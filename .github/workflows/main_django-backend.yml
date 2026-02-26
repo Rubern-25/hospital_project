@@ -74,6 +74,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-app
+          path: django_backend/release.zip
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
