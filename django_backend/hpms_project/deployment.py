@@ -25,7 +25,9 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
 },}
-
+CORS_ALLOWED_ORIGINS = [
+    'https://brave-water-032ac4a03.6.azurestaticapps.net/' 
+]
 CONNECTION = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
 CONNECTION_STR = {pair.split('=')[0]:pair.split('=')[1] for pair in CONNECTION.split(' ')}
 DATABASES = {
