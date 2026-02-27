@@ -9,7 +9,11 @@ SECRET_KEY = '(34!v2gr=0i@z@ld!46g3x$o40$!&vb@hz09xxdz!@g^06muw4'
 import os
 DEBUG = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'backend-django-ekemcgc8a4cqezeb.southafricanorth-01.azurewebsites.net',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -84,10 +88,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS - Allow the React frontend
+# CORS - Allow the React/Next frontend (local + Azure Static Web App)
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
+    'https://brave-water-032ac4a03.6.azurestaticapps.net',
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -95,7 +100,14 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
+    'https://brave-water-032ac4a03.6.azurestaticapps.net',
 ]
+
+# Cookies for cross-site (frontend on different domain) - required for Azure
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Django REST Framework
 REST_FRAMEWORK = {
