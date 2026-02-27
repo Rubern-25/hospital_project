@@ -13,6 +13,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'backend-django-ekemcgc8a4cqezeb.southafricanorth-01.azurewebsites.net',
+    'brave-water-032ac4a03.6.azurestaticapps.net',
 ]
 
 INSTALLED_APPS = [
