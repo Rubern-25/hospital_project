@@ -4,7 +4,24 @@ Django settings for HPMS (Hospital Patients Management System).
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://brave-water-032ac4a03.6.azurestaticapps.net",
+]
 
+CSRF_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# if using django-cors-headers
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://brave-water-032ac4a03.6.azurestaticapps.net",
+]
+CORS_ALLOW_CREDENTIALS = True
 SECRET_KEY = '(34!v2gr=0i@z@ld!46g3x$o40$!&vb@hz09xxdz!@g^06muw4'
 import os
 DEBUG = True
@@ -17,14 +34,10 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
 # CSRF trusted origins (very important)
-CSRF_TRUSTED_ORIGINS = [
-    "https://brave-water-032ac4a03.6.azurestaticapps.net",
-]
+
 
 # If you use django-cors-headers:
-CORS_ALLOWED_ORIGINS = [
-    "https://brave-water-032ac4a03.6.azurestaticapps.net",
-]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -103,12 +116,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_CREDENTIALS = True
 
 # CSRF - Trust same origins as CORS so login/API work from frontend
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'https://brave-water-032ac4a03.6.azurestaticapps.net',
 
-]
 
 # Django REST Framework
 REST_FRAMEWORK = {
