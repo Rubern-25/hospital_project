@@ -10,7 +10,22 @@ import os
 DEBUG = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ALLOWED_HOSTS = []
+# Cookies must be sent cross-site (frontend on different domain)
+CSRF_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
+# CSRF trusted origins (very important)
+CSRF_TRUSTED_ORIGINS = [
+    "https://brave-water-032ac4a03.6.azurestaticapps.net",
+]
+
+# If you use django-cors-headers:
+CORS_ALLOWED_ORIGINS = [
+    "https://brave-water-032ac4a03.6.azurestaticapps.net",
+]
+CORS_ALLOW_CREDENTIALS = True
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
