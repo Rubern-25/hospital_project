@@ -335,21 +335,13 @@ def register_view(request):
 def csrf_view(request):
     return Response({'detail': 'CSRF cookie set'})
 
-
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def logout_view(request):
     logout(request)
     return Response({'detail': 'Logged out successfully'})
 
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def me_view(request):
-    profile = get_profile(request)
-    if not profile:
-        return Response({'detail': 'User profile not configured'}, status=status.HTTP_400_BAD_REQUEST)
-    return Response(UserProfileSerializer(profile).data)
 
 
 @api_view(['GET'])
