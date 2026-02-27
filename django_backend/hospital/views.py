@@ -6,6 +6,7 @@ from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .models import Appointment, Bill, Doctor, Medication, Patient, Treatment, UserProfile
+from django.views.decorators.csrf import csrf_exempt
 from .serializers import (
     AuthUserSerializer,
     AppointmentSerializer,
@@ -243,24 +244,7 @@ class BillViewSet(BaseRoleViewSet):
         serializer.save()
 
 
-@api_view(['POST'])
-@permission_classes([permissions.AllowAny])
-def login_view(request):
-    username = (request.data.get('username') or '').strip()
-    password = request.data.get('password') or ''
-    if not username or not password:
-        return Response({'detail': 'Username and password required'}, status=status.HTTP_400_BAD_REQUEST)
-    user = authenticate(request, username=username, password=password)
-    if not user:
-        return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
-    login(request, user)
-    profile = get_profile(request)
-    if not profile:
-        return Response({'detail': 'User profile not configured'}, status=status.HTTP_400_BAD_REQUEST)
-    return Response(UserProfileSerializer(profile).data)
-
-
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register_view(request):
@@ -456,7 +440,7 @@ def dashboard_stats(request):
         'recent_appointments': recent_appointments,
         'revenue': revenue,
     })
-
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def login_view(request):
@@ -476,7 +460,7 @@ def login_view(request):
 
     return Response(AuthUserSerializer(profile).data)
 
-
+@csrf_exempt
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def me_view(request):
