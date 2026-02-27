@@ -112,7 +112,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOW_CREDENTIALS = True
+
 
 # CSRF - Trust same origins as CORS so login/API work from frontend
 
