@@ -107,39 +107,47 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 
-class AuthUserSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    username = serializers.CharField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
-    role = serializers.SerializerMethodField()
-    patient = serializers.IntegerField(allow_null=True)
-    doctor = serializers.IntegerField(allow_null=True)
-    patient_name = serializers.CharField(allow_null=True, required=False)
-    doctor_name = serializers.CharField(allow_null=True, required=False)
+from rest_framework import serializers
+from .models import UserProfile
 
-    def get_role(self, profile: UserProfile) -> str:
+class AuthUserSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(source="user.id")
+    username = serializers.CharField(source="user.username")
+    first_name = serializers.CharField(source="user.first_name")
+    last_name = serializers.CharField(source="user.last_name")
+    role = serializers.SerializerMethodField()
+    patient = serializers.IntegerField(source="patient.id", allow_null=True)
+    doctor = serializers.IntegerField(source="doctor.id", allow_null=True)
+    patient_name = serializers.SerializerMethodField()
+    doctor_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserProfile
+        fields = [
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "role",
+            "patient",
+            "doctor",
+            "patient_name",
+            "doctor_name",
+        ]
+
+    def get_role(self, profile):
         if profile.role == UserProfile.ROLE_ADMIN:
             return "Admin"
         if profile.role == UserProfile.ROLE_DOCTOR:
             return "Doctor"
-        return "Patient"  # default
+        return "Patient"
 
-    def to_representation(self, profile: UserProfile):
-        user = profile.user
-        data = super().to_representation({
-            "id": user.id,
-            "username": user.username,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "patient": profile.patient_id,
-            "doctor": profile.doctor_id,
-        })
-        # Optional names for convenience on frontend
-        data["patient_name"] = (
-            profile.patient and f"{profile.patient.first_name} {profile.patient.last_name}"
-        ) or None
-        data["doctor_name"] = (
-            profile.doctor and profile.doctor.name
-        ) or None
-        return data
+    def get_patient_name(self, profile):
+        if profile.patient:
+            return f"{profile.patient.first_name} {profile.patient.last_name}"
+        return None
+
+    def get_doctor_name(self, profile):
+        if profile.doctor:
+            return profile.doctor.name
+        return None
