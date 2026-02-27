@@ -22,7 +22,10 @@ SECRET_KEY = '(34!v2gr=0i@z@ld!46g3x$o40$!&vb@hz09xxdz!@g^06muw4'
 import os
 DEBUG = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'backend-django-ekemcgc8a4cqezeb.southafricanorth-01.azurewebsites.net',
+    'brave-water-032ac4a03.6.azurestaticapps.net',
+]
 # Cookies must be sent cross-site (frontend on different domain)
 CSRF_COOKIE_SAMESITE = "None"
 SESSION_COOKIE_SAMESITE = "None"
