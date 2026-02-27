@@ -104,3 +104,42 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_doctor_name(self, obj):
         return str(obj.doctor) if obj.doctor else None
+
+
+
+class AuthUserSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    username = serializers.CharField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    role = serializers.SerializerMethodField()
+    patient = serializers.IntegerField(allow_null=True)
+    doctor = serializers.IntegerField(allow_null=True)
+    patient_name = serializers.CharField(allow_null=True, required=False)
+    doctor_name = serializers.CharField(allow_null=True, required=False)
+
+    def get_role(self, profile: UserProfile) -> str:
+        if profile.role == UserProfile.ROLE_ADMIN:
+            return "Admin"
+        if profile.role == UserProfile.ROLE_DOCTOR:
+            return "Doctor"
+        return "Patient"  # default
+
+    def to_representation(self, profile: UserProfile):
+        user = profile.user
+        data = super().to_representation({
+            "id": user.id,
+            "username": user.username,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "patient": profile.patient_id,
+            "doctor": profile.doctor_id,
+        })
+        # Optional names for convenience on frontend
+        data["patient_name"] = (
+            profile.patient and f"{profile.patient.first_name} {profile.patient.last_name}"
+        ) or None
+        data["doctor_name"] = (
+            profile.doctor and profile.doctor.name
+        ) or None
+        return data
