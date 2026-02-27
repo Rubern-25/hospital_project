@@ -25,7 +25,7 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_ALLOWED_ORIGINS = [
     "https://brave-water-032ac4a03.6.azurestaticapps.net",
 ]
-CORS_ALLOW_CREDENTIALS = True
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -99,11 +99,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS - Allow the React frontend
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-]
+
 CORS_ALLOW_CREDENTIALS = True
 
 # CSRF - Trust same origins as CORS so login/API work from frontend
