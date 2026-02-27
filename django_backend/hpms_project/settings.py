@@ -5,8 +5,6 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
     "https://brave-water-032ac4a03.6.azurestaticapps.net",
 ]
 
@@ -17,8 +15,6 @@ SESSION_COOKIE_SECURE = True
 
 # if using django-cors-headers
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
     "https://brave-water-032ac4a03.6.azurestaticapps.net",
 ]
 CORS_ALLOW_CREDENTIALS = True
