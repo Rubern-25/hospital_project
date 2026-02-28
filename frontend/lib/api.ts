@@ -6,44 +6,17 @@ interface RequestOptions {
   headers?: Record<string, string>
 }
 
-function getCookie(name: string): string | null {
-  if (typeof document === "undefined") return null
-  const value = `; ${document.cookie}`
-  const parts = value.split(`; ${name}=`)
-  if (parts.length === 2) {
-    return parts.pop()?.split(";").shift() || null
-  }
-  return null
-}
-
-async function ensureCsrfCookie() {
-  await fetch(`${API_BASE_URL}/auth/csrf/`, {
-    credentials: "include",
-  })
-}
-
 async function apiRequest<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
   const { method = "GET", body, headers = {} } = options
   const upperMethod = method.toUpperCase()
 
-  if (upperMethod !== "GET" && upperMethod !== "HEAD" && upperMethod !== "OPTIONS") {
-    if (!getCookie("csrftoken")) {
-      await ensureCsrfCookie()
-    }
-  }
-
   const config: RequestInit = {
     method: upperMethod,
-    credentials: "include",
     headers: {
       "Content-Type": "application/json",
-      ...(upperMethod !== "GET" && upperMethod !== "HEAD" ? { "X-CSRFToken": getCookie("csrftoken") || "" } : {}),
       ...headers,
     },
-  }
-
-  if (body) {
-    config.body = JSON.stringify(body)
+    body: body ? JSON.stringify(body) : undefined,
   }
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, config)
