@@ -243,7 +243,7 @@ class BillViewSet(BaseRoleViewSet):
             return
         serializer.save()
 
-@csrf_exempt
+
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def login_view(request):
@@ -262,7 +262,6 @@ def login_view(request):
     return Response(AuthUserSerializer(profile).data)
 
 
-@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register_view(request):
@@ -349,7 +348,6 @@ def register_view(request):
 
 
 
-@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def logout_view(request):
