@@ -303,7 +303,7 @@ def register_view(request):
             specialization=specialization,
             phone=phone,
             email=email,
-            is_verified=False,
+            is_verified=True,
         )
         UserProfile.objects.create(user=user, role=UserProfile.ROLE_DOCTOR, doctor=doctor)
         login(request, user)
