@@ -32,11 +32,11 @@ INSTALLED_APPS = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "hospital_db",          # your DB name
-        "USER": "hospital_user",        # your DB user
-        "PASSWORD": "123",  # your DB password
-        "HOST": "localhost",            # or IP/hostname
-        "PORT": "5432",                 # default PostgreSQL port
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
 MIDDLEWARE = [
