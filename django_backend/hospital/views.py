@@ -5,6 +5,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from django.views.decorators.csrf import csrf_exempt
 from .models import Appointment, Bill, Doctor, Medication, Patient, Treatment, UserProfile
 from .serializers import (
     AuthUserSerializer,
