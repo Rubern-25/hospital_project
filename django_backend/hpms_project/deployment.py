@@ -36,16 +36,26 @@ CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+import os
+
 CONNECTION = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
-CONNECTION_STR = {pair.split('=')[0]:pair.split('=')[1] for pair in CONNECTION.split(' ')}
+
+# parse connection string safely
+CONNECTION_STR = {pair.split('=', 1)[0]: pair.split('=', 1)[1] for pair in CONNECTION.split()}
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": CONNECTION_STR['dbname'],
-        "HOST": CONNECTION_STR['host'],
         "USER": CONNECTION_STR['user'],
         "PASSWORD": CONNECTION_STR['password'],
+        "HOST": CONNECTION_STR['host'],
+        "PORT": CONNECTION_STR['port'],
+        "OPTIONS": {
+            "sslmode": CONNECTION_STR.get("sslmode", "require"),
+        },
     }
+}
 }
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
