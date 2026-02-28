@@ -37,7 +37,10 @@ DATABASES = {
         "PASSWORD": "Wweraw2!",          # the password you set
         "HOST": "djando-backend-server.postgres.database.azure.com",
         "PORT": "5432",
-        "sslmode": "require",
+        "OPTIONS": {
+            'sslmode': 'require',
+        },
+    
     }
 }
 MIDDLEWARE = [
