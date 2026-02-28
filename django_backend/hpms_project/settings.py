@@ -32,11 +32,12 @@ INSTALLED_APPS = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "hospital_db",                        # the database you just created
-        "USER": "edrvdmegie@djando-backend-server",   # full username from Azure
+        "NAME": "django-backend-database",                        # the database you just created
+        "USER": "edrvdmegie@django-backend-server",   # full username from Azure
         "PASSWORD": "Wweraw2!",          # the password you set
-        "HOST": "djando-backend-server.postgres.database.azure.com",
+        "HOST": "django-backend-server.postgres.database.azure.com",
         "PORT": "5432",
+        "sslmode": "require",
     }
 }
 MIDDLEWARE = [
