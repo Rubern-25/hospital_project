@@ -12,7 +12,6 @@ router.register(r'bills', views.BillViewSet, basename='bills')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('auth/csrf/', views.csrf_view, name='auth-csrf'),
     path('auth/login/', views.login_view, name='auth-login'),
     path('auth/register/', views.register_view, name='auth-register'),
     path('auth/logout/', views.logout_view, name='auth-logout'),
