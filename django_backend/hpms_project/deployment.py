@@ -2,12 +2,12 @@ import os
 from .settings import *
 from .settings import BASE_DIR
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
+
+DEBUG = False
 CSRF_TRUSTED_ORIGINS = [
-    'https://' + os.environ['WEBSITE_HOSTNAME'],
+    f"https://{os.environ.get('WEBSITE_HOSTNAME')}",
     'https://brave-water-032ac4a03.6.azurestaticapps.net',
 ]
-DEBUG = False
-
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
