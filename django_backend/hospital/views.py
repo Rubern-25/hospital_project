@@ -1,7 +1,7 @@
 from django.db.models import Q, Sum
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -243,7 +243,6 @@ class BillViewSet(BaseRoleViewSet):
         serializer.save()
 
 
-@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def login_view(request):
@@ -262,7 +261,7 @@ def login_view(request):
     return Response(AuthUserSerializer(profile).data)
 
 
-@csrf_exempt
+
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register_view(request):
@@ -354,7 +353,6 @@ def csrf_view(request):
     return Response({'detail': 'CSRF cookie set'})
 
 
-@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def logout_view(request):
