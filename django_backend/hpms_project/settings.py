@@ -32,7 +32,7 @@ INSTALLED_APPS = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "django-backend-database",                        # the database you just created
+        "NAME": "djando-backend-server",                        # the database you just created
         "USER": "edrvdmegie@django-backend-server",   # full username from Azure
         "PASSWORD": "Wweraw2!",          # the password you set
         "HOST": "djando-backend-server.postgres.database.azure.com",
