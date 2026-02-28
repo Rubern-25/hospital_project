@@ -35,7 +35,7 @@ DATABASES = {
         "NAME": "django-backend-database",                        # the database you just created
         "USER": "edrvdmegie@django-backend-server",   # full username from Azure
         "PASSWORD": "Wweraw2!",          # the password you set
-        "HOST": "django-backend-server.postgres.database.azure.com",
+        "HOST": "djando-backend-server.postgres.database.azure.com",
         "PORT": "5432",
         "sslmode": "require",
     }
