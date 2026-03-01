@@ -27,10 +27,7 @@ export function DoctorsPage({ doctors, onCreate, onUpdate, onDelete }: DoctorsPa
   const [editing, setEditing] = useState<Doctor | null>(null)
   const [form, setForm] = useState<DoctorInput>(emptyForm)
 
-  const filtered = doctors.filter((d) => {
-    const term = search.toLowerCase()
-    return d.name.toLowerCase().includes(term) || d.specialization.toLowerCase().includes(term)
-  })
+  const filtered = doctors.filter((d) => d.is_verified === true)
 
   function openCreate() {
     setEditing(null)
