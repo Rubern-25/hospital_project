@@ -5,6 +5,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import csrf_exempt
 from .models import Appointment, Bill, Doctor, Medication, Patient, Treatment, UserProfile
 from .serializers import (
@@ -256,10 +257,13 @@ def login_view(request):
         return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
     login(request, user)
+    token, _ = Token.objects.get_or_create(user=user)
     profile = get_profile(request)
     if not profile:
         return Response({'detail': 'User profile not configured'}, status=status.HTTP_400_BAD_REQUEST)
-    return Response(AuthUserSerializer(profile).data)
+    data = AuthUserSerializer(profile).data
+    data['token'] = token.key
+    return Response(data)
 
 
 @api_view(['POST'])
@@ -307,8 +311,11 @@ def register_view(request):
         )
         UserProfile.objects.create(user=user, role=UserProfile.ROLE_DOCTOR, doctor=doctor)
         login(request, user)
+        token, _ = Token.objects.get_or_create(user=user)
         profile = get_profile(request)
-        return Response(AuthUserSerializer(profile).data)
+        data = AuthUserSerializer(profile).data
+        data['token'] = token.key
+        return Response(data)
 
     # Patient registration
     gender = request.data.get('gender') or 'Other'
@@ -342,15 +349,21 @@ def register_view(request):
     )
     UserProfile.objects.create(user=user, role=UserProfile.ROLE_PATIENT, patient=patient)
     login(request, user)
+    token, _ = Token.objects.get_or_create(user=user)
     profile = get_profile(request)
-    return Response(AuthUserSerializer(profile).data)
-
+    data = AuthUserSerializer(profile).data
+    data['token'] = token.key
+    return Response(data)
 
 
 
 @api_view(['POST'])
-@permission_classes([permissions.AllowAny])
+@permission_classes([permissions.IsAuthenticated])
 def logout_view(request):
+    try:
+        request.user.auth_token.delete()
+    except (AttributeError, Exception):
+        pass
     logout(request)
     return Response({'detail': 'Logged out successfully'})
 

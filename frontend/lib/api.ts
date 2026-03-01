@@ -17,6 +17,18 @@ async function apiRequest<T>(endpoint: string, options: RequestOptions = {}): Pr
       ...headers,
     },
     body: body ? JSON.stringify(body) : undefined,
+    credentials: "include",
+  }
+
+  // Add Token auth if available
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("auth_token")
+    if (token) {
+      config.headers = {
+        ...config.headers,
+        Authorization: `Token ${token}`,
+      }
+    }
   }
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, config)
@@ -114,12 +126,22 @@ export interface RegisterInput {
 }
 
 export const authApi = {
-  login: (username: string, password: string) =>
-    apiRequest<AuthUser>("/auth/login/", { method: "POST", body: { username, password } }),
-  register: (data: RegisterInput) =>
-    apiRequest<AuthUser>("/auth/register/", { method: "POST", body: data }),
+  login: async (username: string, password: string) => {
+    const res = await apiRequest<AuthUser>("/auth/login/", { method: "POST", body: { username, password } })
+    if (res.token) localStorage.setItem("auth_token", res.token)
+    return res
+  },
+  register: async (data: RegisterInput) => {
+    const res = await apiRequest<AuthUser>("/auth/register/", { method: "POST", body: data })
+    if (res.token) localStorage.setItem("auth_token", res.token)
+    return res
+  },
   me: () => apiRequest<AuthUser>("/auth/me/"),
-  logout: () => apiRequest<{ detail: string }>("/auth/logout/", { method: "POST" }),
+  logout: async () => {
+    const res = await apiRequest<{ detail: string }>("/auth/logout/", { method: "POST" })
+    localStorage.removeItem("auth_token")
+    return res
+  },
 }
 
 // Types
@@ -135,6 +157,7 @@ export interface AuthUser {
   doctor: number | null
   patient_name?: string | null
   doctor_name?: string | null
+  token?: string
 }
 
 export interface Patient {

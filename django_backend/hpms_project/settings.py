@@ -15,9 +15,6 @@ ALLOWED_HOSTS = [
     'backend-django-ekemcgc8a4cqezeb.southafricanorth-01.azurewebsites.net',
     'brave-water-032ac4a03.6.azurestaticapps.net',
 ]
-SRF_TRUSTED_ORIGINS = [
-    'https://brave-water-032ac4a03.6.azurestaticapps.net',
-]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,8 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Third party
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     # Local
     'hospital',
@@ -50,7 +47,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -122,6 +119,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': None,
