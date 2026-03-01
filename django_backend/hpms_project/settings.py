@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = '(34!v2gr=0i@z@ld!46g3x$o40$!&vb@hz09xxdz!@g^06muw4'
 import os
-DEBUG = True
+DEBUG = False
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ALLOWED_HOSTS = [
     'localhost',
