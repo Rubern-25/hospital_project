@@ -15,7 +15,9 @@ ALLOWED_HOSTS = [
     'backend-django-ekemcgc8a4cqezeb.southafricanorth-01.azurewebsites.net',
     'brave-water-032ac4a03.6.azurestaticapps.net',
 ]
-
+SRF_TRUSTED_ORIGINS = [
+    'https://brave-water-032ac4a03.6.azurestaticapps.net',
+]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
