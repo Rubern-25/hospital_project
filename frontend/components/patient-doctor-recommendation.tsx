@@ -38,10 +38,10 @@ export function PatientDoctorRecommendation({
   const [submitting, setSubmitting] = useState(false)
 
   // For patients, only show verified doctors (backend filters when live; for mock filter by is_verified !== false)
-  const availableDoctors = useMemo(() => {
-    return doctors.filter((d) => d.is_verified !== false)
-  }, [doctors])
-
+  // For patients, only show verified doctors (backend filters when live; for mock filter by is_verified === true)
+const availableDoctors = useMemo(() => {
+  return doctors.filter((d) => d.is_verified === true)
+}, [doctors])
   const localSearchResults = useMemo(() => {
     const term = problem.toLowerCase()
     if (!term) return availableDoctors
