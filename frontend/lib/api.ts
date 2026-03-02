@@ -20,8 +20,9 @@ async function apiRequest<T>(endpoint: string, options: RequestOptions = {}): Pr
     credentials: "include",
   }
 
-  // Add Token auth if available
-  if (typeof window !== "undefined") {
+  // Add Token auth if available (but NOT for login/register)
+  const isAuthEndpoint = endpoint.includes("/auth/login/") || endpoint.includes("/auth/register/")
+  if (typeof window !== "undefined" && !isAuthEndpoint) {
     const token = localStorage.getItem("auth_token")
     if (token) {
       config.headers = {
@@ -34,6 +35,9 @@ async function apiRequest<T>(endpoint: string, options: RequestOptions = {}): Pr
   const response = await fetch(`${API_BASE_URL}${endpoint}`, config)
 
   if (!response.ok) {
+    if (response.status === 401 && typeof window !== "undefined") {
+      localStorage.removeItem("auth_token")
+    }
     const error = await response.json().catch(() => ({ detail: "An error occurred" }))
     throw new Error(error.detail || `HTTP ${response.status}`)
   }
